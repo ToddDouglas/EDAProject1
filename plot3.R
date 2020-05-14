@@ -1,0 +1,11 @@
+data<- read_delim("household_power_consumption.txt", delim=";", col_names = TRUE, na = "?")
+data$Date <- as.Date(data$Date, format="%d/%m/%Y")
+feb <- data[data$Date=="2007-02-02" | data$Date=="2007-02-01",]
+plot(feb$Sub_metering_1 , type="n", xaxt="n", ylab="Energy Sub Metering", xlab="")
+points(feb$Sub_metering_1, type = "l")
+points(feb$Sub_metering_2, type = "l", col="Red")
+points(feb$Sub_metering_3, type = "l", col="Blue")
+legend("topright", legend=c("Sub_metering_1", "Sub_metering_2", "Sub_metering_3"), col=c("black", "red", "blue"), lty=1)
+axis(1, at=c(0, 1440, 2880), labels = c("Thu", "Fri", "Sat"))
+dev.copy(png, "plot3.png")
+dev.off()
